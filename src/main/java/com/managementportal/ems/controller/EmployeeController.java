@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/employees")
@@ -37,10 +37,10 @@ public class EmployeeController {
         return ResponseEntity.ok(savedEmployee);
     }
 
-    @PutMapping
-    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto)
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,@RequestBody EmployeeDto employeeDto)
     {
-       EmployeeDto savedEmployee=employeeService.updateEmployee(employeeDto);
+       EmployeeDto savedEmployee=employeeService.updateEmployee(id,employeeDto);
         return ResponseEntity.ok(savedEmployee);
     }
 

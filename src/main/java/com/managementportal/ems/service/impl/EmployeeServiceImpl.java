@@ -42,8 +42,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto updateEmployee(EmployeeDto empdto) {
-        Employee emp=employeeRepository.findById(empdto.getId()).orElseThrow(()->new ResourceNotFoundException("Resource not present"));
+    public EmployeeDto updateEmployee(Long id,EmployeeDto empdto) {
+        Employee emp=employeeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Resource not present"));
         emp.setEmail(empdto.getEmail());
         emp.setFirstname(empdto.getFirstname());
         emp.setLastname(empdto.getLastname());

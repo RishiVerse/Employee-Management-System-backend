@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -28,5 +30,11 @@ public class Employee {
     @Column(name = "email_address", nullable = false,unique = true)
     private String email;
 
+    private String role;
 
+    //private Map<String,Integer> skills;
+
+
+    public Employee(Long id, String firstname, String lastname, String email) {
+    }
 }
