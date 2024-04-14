@@ -7,6 +7,8 @@ import com.managementportal.ems.exception.ResourceNotFoundException;
 import com.managementportal.ems.mapper.EmployeeMapper;
 import com.managementportal.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +22,25 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+
+
     @Override
     public EmployeeDto createEmployee(EmployeeDto empdto) {
+        Employee employee = EmployeeMapper.mapToEmployee(empdto);
+        String email = empdto.getEmailAddress();
 
-        Employee employee= EmployeeMapper.mapToEmployee(empdto);
+        // Check if an employee with the same email already exists
+        if (employeeRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("Employee with email " + email + " already exists.");
+        }
+
+        // Save the new employee
         employeeRepository.save(employee);
+       // System.out.println(employee.getEmail());
+
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+
 
     @Override
     public EmployeeDto getEmployeeById(Long id) {
@@ -34,6 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(()->new ResourceNotFoundException("Resource not found"+id));
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+
+
 
     @Override
     public List<EmployeeDto> getAllEmployee() {
@@ -44,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto updateEmployee(Long id,EmployeeDto empdto) {
         Employee emp=employeeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Resource not present"));
-        emp.setEmail(empdto.getEmail());
+        emp.setEmail(empdto.getEmailAddress());
         emp.setFirstname(empdto.getFirstname());
         emp.setLastname(empdto.getLastname());
         employeeRepository.save(emp);

@@ -1,4 +1,7 @@
+
 package com.managementportal.ems.Config;
+import org.springframework.context.annotation.Bean;
+
 
 
 import lombok.AllArgsConstructor;
@@ -20,27 +23,28 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 @Configuration
 public class SpringSecurityConfig {
-
-
-    //    private UserDetailsService userDetailsService;
+//
+//
+//    //    private UserDetailsService userDetailsService;
     @Bean
     public static PasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
-        http.csrf(AbstractHttpConfigurer::disable).
-                authorizeHttpRequests((authorize)->{
-                    authorize.requestMatchers("api/auth/**").permitAll();
-                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-                    authorize.anyRequest().authenticated();
-                }).httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
-
+//
+//    @Bean
+//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+//    {
+//        http.csrf(AbstractHttpConfigurer::disable).
+//                authorizeHttpRequests((authorize)->{
+//                    authorize.requestMatchers("api/auth/**").permitAll();
+//                    authorize.requestMatchers("api/employees/**").permitAll();
+//                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+//                    authorize.anyRequest().authenticated();
+//                }).httpBasic(Customizer.withDefaults());
+//        return http.build();
+//    }
+//
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

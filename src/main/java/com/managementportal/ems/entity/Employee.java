@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Map;
 
 @Setter
 @Getter
@@ -21,20 +20,27 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "email_address")
+    private String email;
+
     @Column(name = "first_name")
     private String firstname;
 
     @Column(name = "last_name" )
     private String lastname;
 
-    @Column(name = "email_address", nullable = false,unique = true)
-    private String email;
-
-    private String role;
-
-    //private Map<String,Integer> skills;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department_Id;
 
 
-    public Employee(Long id, String firstname, String lastname, String email) {
-    }
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
+    @Column(name = "employee_id")
+    private Long employeeId;
+
 }

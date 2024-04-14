@@ -34,6 +34,7 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDto>> getAllEmployee()
     {
         List<EmployeeDto> savedEmployee=employeeService.getAllEmployee();
+        System.out.println(savedEmployee);
         return ResponseEntity.ok(savedEmployee);
     }
 
@@ -50,6 +51,8 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
 
     }
+
+
 
 
 

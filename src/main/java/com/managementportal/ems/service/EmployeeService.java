@@ -10,6 +10,6 @@ public interface EmployeeService {
     List<EmployeeDto> getAllEmployee();
     EmployeeDto updateEmployee(Long id,EmployeeDto empdto);
     void deleteEmployee(Long id);
-
+   // boolean getEmployeeByEmail(EmployeeDto employeeDto);
 
 }
