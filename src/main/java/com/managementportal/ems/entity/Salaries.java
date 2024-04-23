@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,13 +19,12 @@ import lombok.Setter;
 public class Salaries {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long salaryId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employeeId;
     private Long basic_salary;
     private Long bonus;
     private Long deduction;
     private Long total_salary;
+
+
+
 }

@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 
 @Setter
 @Getter
@@ -16,9 +19,7 @@ import lombok.Setter;
 @Table(name = "employees")
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+
 
     @Column(name = "email_address")
     private String email;
@@ -29,18 +30,28 @@ public class Employee {
     @Column(name = "last_name" )
     private String lastname;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
-    private Department department_Id;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "department_id")
+//    private Department department_Id;
 
 
     @Column(name = "address")
     private String address;
 
+
     @Column(name = "mobile_number")
     private String mobileNumber;
 
+
+    @Id
     @Column(name = "employee_id")
     private Long employeeId;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="employee_id" )
+    private Set<Salaries> salaries;
+
 
 }

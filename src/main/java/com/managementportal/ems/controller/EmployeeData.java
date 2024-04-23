@@ -2,6 +2,7 @@ package com.managementportal.ems.controller;
 
 
 import com.managementportal.ems.dto.SalaryDto;
+import com.managementportal.ems.entity.Salaries;
 import com.managementportal.ems.service.EmployeeDataService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,15 @@ public class EmployeeData {
     @PostMapping
     public ResponseEntity<SalaryDto> createEmployee(@RequestBody SalaryDto salaryDto)
     {
+
         SalaryDto savedSalary=employeeDataService.createSalary(salaryDto);
         return new ResponseEntity<>(savedSalary, HttpStatus.CREATED);
     }
 
-    @GetMapping("{employee_id}")
-    public ResponseEntity<SalaryDto> getEmployee(@PathVariable Long employee_id)
+    @GetMapping("{id}")
+    public ResponseEntity<SalaryDto> getEmployee(@PathVariable Long id)
     {
-        SalaryDto savedEmployee=employeeDataService.getSalaryById(employee_id);
+        SalaryDto savedEmployee=employeeDataService.getSalaryById(id);
         return ResponseEntity.ok(savedEmployee);
     }
 

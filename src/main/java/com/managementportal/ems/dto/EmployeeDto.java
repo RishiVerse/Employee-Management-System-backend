@@ -2,6 +2,7 @@ package com.managementportal.ems.dto;
 
 
 import com.managementportal.ems.entity.Department;
+import com.managementportal.ems.entity.Salaries;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,13 +12,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDto {
 
-    private Long id;
+
 
     private String emailAddress;
 
@@ -25,13 +29,16 @@ public class EmployeeDto {
 
     private String lastname;
 
-    private Department departmentId;
+    //private Department departmentId;
 
     private String address;
 
     private String mobileNumber;
 
     private Long employeeId;
+
+    private Set<Salaries> salaries;
+   // private List<Salaries> salaries;
 
 
 }
