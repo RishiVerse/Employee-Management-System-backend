@@ -1,6 +1,7 @@
 package com.managementportal.ems.service;
 
 import com.managementportal.ems.dto.EmployeeDto;
+import com.managementportal.ems.dto.RegisterDto;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ public interface EmployeeService {
     List<EmployeeDto> getAllEmployee();
     EmployeeDto updateEmployee(Long id,EmployeeDto empdto);
     void deleteEmployee(Long id);
-   // boolean getEmployeeByEmail(EmployeeDto employeeDto);
+    List<EmployeeDto> createBulkEmployee(List<EmployeeDto> employeeDtos);
+
 
 }

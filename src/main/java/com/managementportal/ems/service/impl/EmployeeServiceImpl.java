@@ -7,13 +7,10 @@ import com.managementportal.ems.exception.ResourceNotFoundException;
 import com.managementportal.ems.mapper.EmployeeMapper;
 import com.managementportal.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
-import org.springframework.data.crossstore.ChangeSetPersister;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -22,6 +19,37 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    static Set<EmployeeDto> empDuplicateSet = Collections.synchronizedSet(new HashSet<>());
+
+    @Override
+    public List<EmployeeDto> createBulkEmployee(List<EmployeeDto> employeeDtos) {
+        List<Employee> employees = new ArrayList<>();
+        empDuplicateSet.clear();
+
+        for (var employeeEach : employeeDtos) {
+            Employee emp = new Employee();
+
+            // Check if employee with the same email already exists
+            if (employeeRepository.findByEmail(employeeEach.getEmailAddress()).isPresent() ||
+                    employeeRepository.findByEmployeeId(employeeEach.getEmployeeId()).isPresent()) {
+                empDuplicateSet.add(employeeEach);
+            } else {
+                emp.setEmail(employeeEach.getEmailAddress());
+                emp.setEmployeeId(employeeEach.getEmployeeId());
+                emp.setFirstname(employeeEach.getFirstname());
+                emp.setLastname(employeeEach.getLastname());
+                emp.setAddress(employeeEach.getAddress());
+                employees.add(emp);
+            }
+        }
+
+        // Save only non-duplicate employees
+        List<Employee> savedEmployees = employeeRepository.saveAll(employees);
+
+        return savedEmployees.stream()
+                .map(EmployeeMapper::mapToEmployeeDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto empdto) {

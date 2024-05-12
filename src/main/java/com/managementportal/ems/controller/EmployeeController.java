@@ -16,10 +16,23 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeService employeeService;
-@PostMapping
+
+    // For creating an employee
+
+    @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto)
     {
         EmployeeDto savedEmployee=employeeService.createEmployee(employeeDto);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+    }
+
+
+    // For adding bulk users
+
+    @PostMapping("bulk")
+    public ResponseEntity<List<EmployeeDto>> createBulkEmployee(@RequestBody List<EmployeeDto> employeeDto)
+    {
+        List<EmployeeDto> savedEmployee=employeeService.createBulkEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 

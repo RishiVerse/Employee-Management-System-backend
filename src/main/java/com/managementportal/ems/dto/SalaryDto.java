@@ -1,7 +1,6 @@
 package com.managementportal.ems.dto;
 
 
-import com.managementportal.ems.entity.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

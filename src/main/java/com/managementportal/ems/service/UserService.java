@@ -4,9 +4,12 @@ import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
 
+import java.util.List;
+
 public interface UserService {
     RegisterDto register(RegisterDto registerDto);
 
     String login(LoginDto loginDto);
 
-}
+
+    }

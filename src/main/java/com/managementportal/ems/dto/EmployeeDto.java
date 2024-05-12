@@ -21,8 +21,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class EmployeeDto {
 
-
-
     private String emailAddress;
 
     private String firstname;

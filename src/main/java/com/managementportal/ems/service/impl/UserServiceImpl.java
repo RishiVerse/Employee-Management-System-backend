@@ -14,19 +14,33 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private AuthService authService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
+
+
+
+
+
     @Override
     public RegisterDto register(RegisterDto registerDto) {
         Register register= new Register();
+
+
+
         register.setEmail(registerDto.getEmail());
         register.setName(registerDto.getUsername());
         register.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         register.setName(registerDto.getName());
+
+
         authService.save(register);
         return RegisterMapper.mapToRegisterDto(register);
     }

@@ -13,6 +13,7 @@ import com.managementportal.ems.service.EmployeeDataService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,11 +24,13 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     SalaryDataRepo salaryDataRepo;
     EmployeeRepository employeeRepository;
 
+
+
     @Override
     public SalaryDto createSalary(SalaryDto salaryDto) {
+//        List<SalaryDto> salaryDtoList=new ArrayList<>();
 
         Salaries salaries = SalaryMapper.mapToSalary(salaryDto);
-      //  System.out.println(salaries.getEmployee().getEmployeeId());
         salaryDataRepo.save(salaries);
         return SalaryMapper.mapToSalaryDto(salaries);
     }
