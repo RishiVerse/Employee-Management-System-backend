@@ -1,9 +1,6 @@
 package com.managementportal.ems.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "departments")
+@NamedQueries({
+        @NamedQuery(name = "Department.updateBy", query = "update Department d set ")
+})
 public class Department {
 
     @Id

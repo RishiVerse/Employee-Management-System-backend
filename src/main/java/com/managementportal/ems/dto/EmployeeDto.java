@@ -2,7 +2,8 @@ package com.managementportal.ems.dto;
 
 
 import com.managementportal.ems.entity.Department;
-import com.managementportal.ems.entity.Salaries;
+import com.managementportal.ems.entity.Employee;
+import com.managementportal.ems.entity.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,8 +36,9 @@ public class EmployeeDto {
 
     private Long employeeId;
 
-    private Set<Salaries> salaries;
+//private Set<Salaries> salaries;
    // private List<Salaries> salaries;
 
+    private Set<Employee> duplicateEmployee;
 
 }

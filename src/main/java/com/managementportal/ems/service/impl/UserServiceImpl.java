@@ -15,12 +15,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private AuthService authService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
@@ -32,15 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public RegisterDto register(RegisterDto registerDto) {
         Register register= new Register();
-
-
-
         register.setEmail(registerDto.getEmail());
         register.setName(registerDto.getUsername());
         register.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         register.setName(registerDto.getName());
-
-
         authService.save(register);
         return RegisterMapper.mapToRegisterDto(register);
     }
@@ -49,7 +46,6 @@ public class UserServiceImpl implements UserService {
     public String login(LoginDto loginDto) {
         Authentication response = authenticationManager.authenticate
                 (new UsernamePasswordAuthenticationToken(loginDto.getEmail(),loginDto.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(response);
         return "login success";    }
 }

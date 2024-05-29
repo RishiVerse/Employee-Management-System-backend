@@ -1,6 +1,5 @@
 package com.managementportal.ems.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,9 +48,11 @@ public class Employee {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="employee_id" )
-    private Set<Salaries> salaries;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="employee_id" )
+//    private Set<Salaries> salaries;
 
+
+    transient Set<Employee> duplicateEmployee;
 
 }
