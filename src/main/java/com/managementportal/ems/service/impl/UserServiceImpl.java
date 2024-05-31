@@ -1,12 +1,13 @@
 package com.managementportal.ems.service.impl;
 
 import com.managementportal.ems.Repository.AuthService;
+import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
 import com.managementportal.ems.entity.Register;
-import com.managementportal.ems.mapper.RegisterMapper;
 import com.managementportal.ems.service.UserService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,9 +27,7 @@ public class UserServiceImpl implements UserService {
     private AuthService authService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
-
-
-
+    private ModelMapper modelMapper;
 
 
     @Override
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
         register.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         register.setName(registerDto.getName());
         authService.save(register);
-        return RegisterMapper.mapToRegisterDto(register);
+        return modelMapper.map(register, RegisterDto.class);
     }
 
     @Override

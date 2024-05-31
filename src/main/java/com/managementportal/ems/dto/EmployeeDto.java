@@ -37,8 +37,10 @@ public class EmployeeDto {
     private Long employeeId;
 
 //private Set<Salaries> salaries;
-   // private List<Salaries> salaries;
+    private List<Salaries> salary;
+    private List<Leaves> leave;
 
-    private Set<Employee> duplicateEmployee;
+
+    //  private Set<Employee> duplicateEmployee;
 
 }

@@ -7,10 +7,10 @@ import com.managementportal.ems.dto.SalaryDto;
 import com.managementportal.ems.entity.Department;
 import com.managementportal.ems.entity.Employee;
 import com.managementportal.ems.entity.Salaries;
-import com.managementportal.ems.mapper.EmployeeMapper;
-import com.managementportal.ems.mapper.SalaryMapper;
+
 import com.managementportal.ems.service.EmployeeDataService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,8 +21,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class EmployeeDataServiceImpl implements EmployeeDataService {
+
     SalaryDataRepo salaryDataRepo;
     EmployeeRepository employeeRepository;
+    ModelMapper modelMapper;
 
 
 
@@ -30,41 +32,28 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     public SalaryDto createSalary(SalaryDto salaryDto) {
 //        List<SalaryDto> salaryDtoList=new ArrayList<>();
 
-        Salaries salaries = SalaryMapper.mapToSalary(salaryDto);
+        Salaries salaries = modelMapper.map(salaryDto,Salaries.class);
         salaryDataRepo.save(salaries);
-        return SalaryMapper.mapToSalaryDto(salaries);
+        return modelMapper.map(salaries,SalaryDto.class);
     }
 
     @Override
     public SalaryDto getSalaryById(Long employee_id) {
         Optional<Salaries> salaryList = salaryDataRepo.findById(employee_id);
         Salaries salary=salaryList.get();
-        SalaryDto salaryDto=SalaryMapper.mapToSalaryDto(salary);
+       // SalaryDto salaryDto=SalaryMapper.mapToSalaryDto(salary);
         //employee.setEmployeeId(salaryDto.getEmployeeId());
         System.out.println(salaryList);
-        return SalaryMapper.mapToSalaryDto(salary);
+        return modelMapper.map(salary,SalaryDto.class);
     }
 
     @Override
     public List<SalaryDto> getAllSalary() {
         List<Salaries> salaryList = salaryDataRepo.findAll();
-//        for(var v:salaryList) {
-//            System.out.println(v.getEmployee());
-//        break;}
-        //List<Employee> empDetail=employeeRepository.findById()
 
-
-
-
-//        for (Salaries salary : salaryList) {
-//            System.out.println("Salary ID: " + salary.getSalaryId());
-//           // System.out.println("Employee ID: " + salary.getEmployee().getId());
-//            System.out.println("Basic Salary: " + salary.getBasic_salary());
-//            // Print other salary details as needed
-//           // break;
-//        }
-        return salaryList.stream().map(SalaryMapper::mapToSalaryDto).toList();
-    }
+        return salaryList.stream()
+                .map(salary -> modelMapper.map(salary, SalaryDto.class))
+                .collect(Collectors.toList());    }
 
 
     @Override

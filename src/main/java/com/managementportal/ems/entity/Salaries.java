@@ -24,6 +24,9 @@ public class Salaries {
     private Long bonus;
     private Long deduction;
     private Long total_salary;
+    @ManyToOne
+    private Employee employee;
+
 
 
 

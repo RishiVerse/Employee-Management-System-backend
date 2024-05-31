@@ -13,9 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "departments")
-@NamedQueries({
-        @NamedQuery(name = "Department.updateBy", query = "update Department d set ")
-})
+
 public class Department {
 
     @Id

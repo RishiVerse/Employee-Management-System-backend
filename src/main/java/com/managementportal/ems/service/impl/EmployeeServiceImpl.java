@@ -2,12 +2,13 @@ package com.managementportal.ems.service.impl;
 
 import com.managementportal.ems.Repository.EmployeeRepository;
 import com.managementportal.ems.dto.EmployeeDto;
+import com.managementportal.ems.dto.SalaryDto;
 import com.managementportal.ems.entity.Employee;
 import com.managementportal.ems.exception.ResourceNotFoundException;
-import com.managementportal.ems.mapper.EmployeeMapper;
 import com.managementportal.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private ModelMapper modelMapper;
     static Set<EmployeeDto> empDuplicateSet = Collections.synchronizedSet(new HashSet<>());
 
     @Override
@@ -49,13 +51,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> savedEmployees = employeeRepository.saveAll(employees);
 
         return savedEmployees.stream()
-                .map(EmployeeMapper::mapToEmployeeDto)
+                .map(salary -> modelMapper.map(salary, EmployeeDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto empdto) {
-        Employee employee = EmployeeMapper.mapToEmployee(empdto);
+        Employee employee = modelMapper.map(empdto, Employee.class);
         String email = empdto.getEmailAddress();
 
         // Check if an employee with the same email already exists
@@ -67,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
        // System.out.println(employee.getEmail());
 
-        return EmployeeMapper.mapToEmployeeDto(employee);
+        return modelMapper.map(employee, EmployeeDto.class);
     }
 
 
@@ -75,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Resource not found"+id));
-        return EmployeeMapper.mapToEmployeeDto(employee);
+        return modelMapper.map(employee, EmployeeDto.class);
     }
 
 
@@ -83,7 +85,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDto> getAllEmployee() {
         List<Employee> emp=employeeRepository.findAll();
-        return emp.stream().map(EmployeeMapper::mapToEmployeeDto).collect(Collectors.toList());
+        return emp.stream()
+                .map(employee -> modelMapper.map(employee, EmployeeDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -94,7 +98,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.setLastname(empdto.getLastname());
         employeeRepository.save(emp);
 
-        return EmployeeMapper.mapToEmployeeDto(emp);
+        return modelMapper.map(emp, EmployeeDto.class);
 
     }
 
