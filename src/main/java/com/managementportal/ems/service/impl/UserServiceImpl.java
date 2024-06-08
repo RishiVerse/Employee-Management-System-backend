@@ -1,6 +1,7 @@
 package com.managementportal.ems.service.impl;
 
 import com.managementportal.ems.Repository.AuthService;
+import com.managementportal.ems.Security.JwtTokenProvider;
 import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private ModelMapper modelMapper;
+    private JwtTokenProvider jwtTokenProvider;
 
 
     @Override
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
         register.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         register.setName(registerDto.getName());
         authService.save(register);
-        return modelMapper.map(register, RegisterDto.class);
+        return registerDto;
     }
 
     @Override
@@ -46,5 +48,8 @@ public class UserServiceImpl implements UserService {
         Authentication response = authenticationManager.authenticate
                 (new UsernamePasswordAuthenticationToken(loginDto.getEmail(),loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(response);
-        return "login success";    }
+
+        return jwtTokenProvider.generate(response);
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.managementportal.ems.dto;
 
 
+import com.managementportal.ems.entity.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class SalaryDto {
     private Long bonus;
     private Long deduction;
     private Long total_salary;
+    private Employee employee;
 
 //    @Override
 //    public String toString() {

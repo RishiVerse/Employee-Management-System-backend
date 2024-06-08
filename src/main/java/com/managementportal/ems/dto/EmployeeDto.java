@@ -4,10 +4,7 @@ package com.managementportal.ems.dto;
 import com.managementportal.ems.entity.Department;
 import com.managementportal.ems.entity.Employee;
 import com.managementportal.ems.entity.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,19 +25,16 @@ public class EmployeeDto {
 
     private String lastname;
 
-    //private Department departmentId;
-
     private String address;
 
     private String mobileNumber;
 
     private Long employeeId;
 
-//private Set<Salaries> salaries;
     private List<Salaries> salary;
     private List<Leaves> leave;
-
-
-    //  private Set<Employee> duplicateEmployee;
+    private List<WorkPerformance> workPerformances;
+    private List<Timesheet> timesheets;
+    private List<Department> departments;
 
 }

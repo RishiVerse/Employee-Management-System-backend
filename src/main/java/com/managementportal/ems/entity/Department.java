@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Setter
 @Getter
@@ -13,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "departments")
-
 public class Department {
 
     @Id
@@ -23,4 +24,9 @@ public class Department {
     private String name;
     @Column(name = "description" )
     private String description;
+    @ManyToMany
+    private List<Employee> employees;
+
+
+
 }

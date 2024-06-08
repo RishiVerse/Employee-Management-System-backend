@@ -11,6 +11,7 @@ import com.managementportal.ems.entity.Salaries;
 import com.managementportal.ems.service.EmployeeDataService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,18 +23,25 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeDataServiceImpl implements EmployeeDataService {
 
+    @Autowired
     SalaryDataRepo salaryDataRepo;
+    @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
     ModelMapper modelMapper;
-
-
 
     @Override
     public SalaryDto createSalary(SalaryDto salaryDto) {
 //        List<SalaryDto> salaryDtoList=new ArrayList<>();
-
+        new Employee();
+        Optional<Employee> employee;
+         employee = employeeRepository.findById(salaryDto.getEmployee().getEmployeeId());
+        System.out.println(employee.get());
         Salaries salaries = modelMapper.map(salaryDto,Salaries.class);
+        salaries.setEmployee(employee.get());
+
         salaryDataRepo.save(salaries);
+
         return modelMapper.map(salaries,SalaryDto.class);
     }
 
@@ -62,7 +70,5 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     }
 
     @Override
-    public void deleteSalary(Long id) {
-
-    }
+    public void deleteSalary(Long id) {}
 }
