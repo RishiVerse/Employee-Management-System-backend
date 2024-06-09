@@ -7,7 +7,7 @@ import com.managementportal.ems.dto.RegisterDto;
 import java.util.List;
 
 public interface UserService {
-    RegisterDto register(RegisterDto registerDto);
+    boolean register(RegisterDto registerDto);
 
     String login(LoginDto loginDto);
 

@@ -3,7 +3,11 @@ package com.managementportal.ems.controller;
 
 import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.service.EmployeeService;
+import com.managementportal.ems.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,9 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
+    final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
+    @Autowired
     private EmployeeService employeeService;
 
     // For creating an employee

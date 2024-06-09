@@ -9,17 +9,25 @@ import com.managementportal.ems.service.EmployeeService;
 import lombok.AllArgsConstructor;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-@Service
+@Component
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
+    final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
+    @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
     private ModelMapper modelMapper;
     static Set<EmployeeDto> empDuplicateSet = Collections.synchronizedSet(new HashSet<>());
 
@@ -77,6 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Resource not found"+id));
+
         return modelMapper.map(employee, EmployeeDto.class);
     }
 
@@ -109,6 +118,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
 
     }
+
 
 
 }
