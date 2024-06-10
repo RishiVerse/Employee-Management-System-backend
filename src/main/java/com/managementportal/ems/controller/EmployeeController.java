@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
@@ -25,55 +26,83 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     // For creating an employee
-
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto)
-    {
-        EmployeeDto savedEmployee=employeeService.createEmployee(employeeDto);
-        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+    public ResponseEntity<Boolean> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        boolean saveFlag = false;
+        try {
+
+            saveFlag = employeeService.createEmployee(employeeDto);
+            logger.error("employee is created ");
+
+        } catch (Exception e) {
+            logger.error("creation of employee failed {} ", e.getMessage());
+            return new ResponseEntity<>(saveFlag, HttpStatus.NO_CONTENT);
+
+        }
+
+        return new ResponseEntity<>(saveFlag, HttpStatus.CREATED);
     }
 
 
     // For adding bulk users
 
     @PostMapping("bulk")
-    public ResponseEntity<List<EmployeeDto>> createBulkEmployee(@RequestBody List<EmployeeDto> employeeDto)
-    {
-        List<EmployeeDto> savedEmployee=employeeService.createBulkEmployee(employeeDto);
+    public ResponseEntity<List<EmployeeDto>> createBulkEmployee(@RequestBody List<EmployeeDto> employeeDto) {
+        List<EmployeeDto> savedEmployee = employeeService.createBulkEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable Long id)
-    {
-        EmployeeDto savedEmployee=employeeService.getEmployeeById(id);
-        return ResponseEntity.ok(savedEmployee);
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable Long id) {
+        EmployeeDto byIdFlag = null;
+        try {
+            byIdFlag = employeeService.getEmployeeById(id);
+            if (byIdFlag == null) {
+                logger.error("no employee available with  , id {}", id);
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+
+            }
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
+
+
+        } catch (Exception e) {
+            logger.error("error in finding employee in controller class , id {}", id);
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDto>> getAllEmployee()
-    {
-        List<EmployeeDto> savedEmployee=employeeService.getAllEmployee();
+    public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
+        List<EmployeeDto> savedEmployee = employeeService.getAllEmployee();
         System.out.println(savedEmployee);
         return ResponseEntity.ok(savedEmployee);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,@RequestBody EmployeeDto employeeDto)
-    {
-       EmployeeDto savedEmployee=employeeService.updateEmployee(id,employeeDto);
-        return ResponseEntity.ok(savedEmployee);
+    public ResponseEntity<Boolean> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        boolean savedEmployeeFlag = false;
+        try {
+            logger.info("trying to update , in controller method with id {}", id);
+
+            savedEmployeeFlag = employeeService.updateEmployee(id, employeeDto);
+            if (savedEmployeeFlag)
+                return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+
+            logger.error("updating failed, in controller method with id {}{}", id, e.getMessage());
+            return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
     @DeleteMapping("{id}")
-    public void updateEmployee(@PathVariable Long id)
-    {
+    public void updateEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
 
     }
-
-
-
 
 
 }

@@ -6,11 +6,16 @@ import com.managementportal.ems.dto.RegisterDto;
 import java.util.List;
 
 public interface EmployeeService {
-    EmployeeDto createEmployee(EmployeeDto empdto);
+    boolean createEmployee(EmployeeDto empdto);
+
     EmployeeDto getEmployeeById(Long id);
+
     List<EmployeeDto> getAllEmployee();
-    EmployeeDto updateEmployee(Long id,EmployeeDto empdto);
-    void deleteEmployee(Long id);
+
+    Boolean updateEmployee(Long id, EmployeeDto empdto);
+
+    boolean deleteEmployee(Long id);
+
     List<EmployeeDto> createBulkEmployee(List<EmployeeDto> employeeDtos);
 
 

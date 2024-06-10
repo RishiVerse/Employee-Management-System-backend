@@ -5,6 +5,7 @@ import com.managementportal.ems.Security.JwtTokenProvider;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
 import com.managementportal.ems.entity.Register;
+import com.managementportal.ems.exception.LoginException;
 import com.managementportal.ems.exception.RegistrationException;
 import com.managementportal.ems.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,28 +47,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(RegisterDto registerDto) {
-        Register register= new Register();
 
+        Register register = new Register();
 
-        if(Objects.equals(registerDto.getPassword(), "") ||
+        if (Objects.equals(registerDto.getPassword(), "") ||
                 Objects.equals(registerDto.getUsername(), "") ||
                 Objects.equals(registerDto.getName(), "") ||
-                Objects.equals(registerDto.getEmail(), ""))
-        {
+                Objects.equals(registerDto.getEmail(), "")) {
 
-            logger.error("error will be thrown ");
+            logger.error("Error will be thrown as some value is null. Password: {} Username: {} Name: {} Email: {}",
+                    registerDto.getPassword(), registerDto.getUsername(), registerDto.getName(), registerDto.getEmail());
             throw new RegistrationException("All fields are required for registration.");
 
-        }
-        else {
+        } else {
 
 
             logger.info("registration has started");
 
             register.setEmail(registerDto.getEmail());
             register.setName(registerDto.getUsername());
-            if(registerDto.getPassword().length()<7)
-            {
+            if (registerDto.getPassword().length() < 7) {
                 logger.error("length is less than 7");
                 throw new RegistrationException("password length is less than 7 current length is : " + registerDto.getPassword().length());
 
@@ -78,17 +79,29 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        logger.info("registration object is returned");
+        logger.info("registration is successful");
         return true;
     }
 
     @Override
     public String login(LoginDto loginDto) {
-        Authentication response = authenticationManager.authenticate
-                (new UsernamePasswordAuthenticationToken(loginDto.getEmail(),loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(response);
+        try {
+            logger.info("login in process started");
 
-        return jwtTokenProvider.generate(response);
+            Authentication response = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(response);
+            logger.info("login is successful");
+
+            return jwtTokenProvider.generate(response);
+        } catch (BadCredentialsException e) {
+            logger.error("Invalid login credentials: {}", e.getMessage());
+            throw new LoginException("password length is less than 7 current length is : ");
+        } catch (Exception e) {
+            logger.error("exception other than bad login credentials: {}", e.getMessage());
+            throw new LoginException("Enter correct details");
+        }
 
     }
 }
