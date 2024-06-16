@@ -15,18 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "departments")
-public class Department {
+public class DepartmentTable {
 
     @Id
-    @Column(name = "department_id" )
+    @Column(name = "department_id")
     private Long departmentId;
-    @Column(name = "name" )
+    @Column(name = "name")
     private String name;
-    @Column(name = "description" )
+    @Column(name = "description")
     private String description;
     @ManyToMany
-    private List<Employee> employees;
-
+    private List<EmployeeTable> employeeTable;
 
 
 }

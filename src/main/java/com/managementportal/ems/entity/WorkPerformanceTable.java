@@ -17,13 +17,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class WorkPerformance {
+public class WorkPerformanceTable {
 
     @Id
     private int PerformanceId;
     @ManyToOne
     @JoinColumn(name = "employeeId")
-    private Employee employee;
+    private EmployeeTable employeeTable;
     private String employeeName;
     private String department;
     private String jobTitle;

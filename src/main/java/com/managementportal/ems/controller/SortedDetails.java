@@ -2,21 +2,15 @@ package com.managementportal.ems.controller;
 
 
 import com.managementportal.ems.dto.EmployeeDto;
-import com.managementportal.ems.entity.Employee;
-import com.managementportal.ems.entity.Salaries;
 import com.managementportal.ems.service.EmployeeService;
-import com.managementportal.ems.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -30,52 +24,42 @@ public class SortedDetails {
     EmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeeDto> sortedEmployee(@RequestParam String sortedBy)
-    {
+    public List<EmployeeDto> sortedEmployee(@RequestParam String sortedBy) {
         final Logger logger = LoggerFactory.getLogger(SortedDetails.class);
 
-        List<EmployeeDto> savedEmployee=employeeService.getAllEmployee();
+        List<EmployeeDto> savedEmployee = employeeService.getAllEmployee();
 
-        switch (sortedBy)
-        {
-            case "email":
-            {
+        switch (sortedBy) {
+            case "email": {
                 try {
                     logger.info("\n****** email sorting *******\n");
                     savedEmployee.sort(Comparator.comparing(EmployeeDto::getEmailAddress));
                     break;
-                }
-                catch (Exception e)
-                {
-                    logger.error("\nError sorting employees by {}: {}", sortedBy , e.getMessage(), e);
+                } catch (Exception e) {
+                    logger.error("\nError sorting employees by {}: {}", sortedBy, e.getMessage(), e);
                 }
 
             }
-            case "firstname":
-            {
+            case "firstname": {
 
                 try {
                     logger.info("\n*******  firstname sorting *******\n");
 
                     savedEmployee.sort(Comparator.comparing(EmployeeDto::getFirstname));
                     break;
-                }catch(Exception e)
-                {
-                    logger.error("\nError sorting employees by {}: {}", sortedBy , e.getMessage(), e);
+                } catch (Exception e) {
+                    logger.error("\nError sorting employees by {}: {}", sortedBy, e.getMessage(), e);
 
                 }
             }
-            case "lastname":
-            {
+            case "lastname": {
                 try {
                     logger.info("\n******* lastname sorting *******\n");
 
                     savedEmployee.sort(Comparator.comparing(EmployeeDto::getLastname));
                     break;
-                }
-                catch (Exception e)
-                {
-                    logger.error("\nError sorting employees by {}: {}", sortedBy , e.getMessage(), e);
+                } catch (Exception e) {
+                    logger.error("\nError sorting employees by {}: {}", sortedBy, e.getMessage(), e);
                 }
 
             }
@@ -84,8 +68,7 @@ public class SortedDetails {
                     logger.info("\n******* employeeId sorting *******\n");
 
                     savedEmployee.sort(Comparator.comparing(EmployeeDto::getEmployeeId));
-                }catch(Exception e)
-                {
+                } catch (Exception e) {
                     logger.error("\nError sorting employees by {}: {}", sortedBy, e.getMessage(), e);
 
                 }

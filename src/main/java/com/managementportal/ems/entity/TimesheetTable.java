@@ -1,6 +1,5 @@
 package com.managementportal.ems.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,22 +12,24 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-public class Leaves {
+public class TimesheetTable {
 
     @Id
-    private int leaveId;
+    private int timesheetId;
     @ManyToOne
     @JoinColumn(name = "employeeId")
-    private Employee employeeId;
-    private String leaveType;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String leaveReason;
+    private EmployeeTable employeeTable;
+    private LocalDate date;
+    private double hoursWorked;
+    private String projectCode;
+    private String taskDescription;
     private String approvalStatus;
-    private int numberOfDays;
+    private LocalDate submissionDate;
+    private int approverId;
+    private String comments;
 }

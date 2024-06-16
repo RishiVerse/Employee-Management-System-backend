@@ -7,16 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name="salaries")
+@Table(name = "salaries")
 
-public class Salaries {
+public class SalaryTable {
 
     @Id
     private Long salaryId;
@@ -25,9 +23,7 @@ public class Salaries {
     private Long deduction;
     private Long total_salary;
     @ManyToOne
-    private Employee employee;
-
-
+    private EmployeeTable employeeTable;
 
 
 }

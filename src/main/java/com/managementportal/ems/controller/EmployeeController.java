@@ -1,6 +1,7 @@
 package com.managementportal.ems.controller;
 
 
+import com.managementportal.ems.Threads.GenerateReport;
 import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.service.EmployeeService;
 import com.managementportal.ems.service.impl.UserServiceImpl;
@@ -25,6 +26,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
     // For creating an employee
     @PostMapping
     public ResponseEntity<Boolean> createEmployee(@RequestBody EmployeeDto employeeDto) {
@@ -32,6 +34,7 @@ public class EmployeeController {
         try {
 
             saveFlag = employeeService.createEmployee(employeeDto);
+
             logger.error("employee is created ");
 
         } catch (Exception e) {
@@ -57,6 +60,8 @@ public class EmployeeController {
         EmployeeDto byIdFlag = null;
         try {
             byIdFlag = employeeService.getEmployeeById(id);
+//            Thread thread = new Thread(new GenerateReport(employeeService.getEmployeeById(id)));
+//            thread.start();
             if (byIdFlag == null) {
                 logger.error("no employee available with  , id {}", id);
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -75,6 +80,7 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
         List<EmployeeDto> savedEmployee = employeeService.getAllEmployee();
         System.out.println(savedEmployee);
+
         return ResponseEntity.ok(savedEmployee);
     }
 
@@ -85,6 +91,7 @@ public class EmployeeController {
             logger.info("trying to update , in controller method with id {}", id);
 
             savedEmployeeFlag = employeeService.updateEmployee(id, employeeDto);
+
             if (savedEmployeeFlag)
                 return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.CREATED);
             else

@@ -6,15 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name="Register")
-public class Register {
+@Table(name = "RegisterTable")
+public class RegisterTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +23,7 @@ public class Register {
     private String password;
 
 
-    public Register(String name, String username, String email, String password) {
+    public RegisterTable(String name, String username, String email, String password) {
     }
 }
 

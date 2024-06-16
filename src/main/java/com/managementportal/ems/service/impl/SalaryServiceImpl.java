@@ -2,31 +2,27 @@ package com.managementportal.ems.service.impl;
 
 import com.managementportal.ems.Repository.EmployeeRepository;
 import com.managementportal.ems.Repository.SalaryDataRepo;
-import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.dto.SalaryDto;
-import com.managementportal.ems.entity.Department;
-import com.managementportal.ems.entity.Employee;
-import com.managementportal.ems.entity.Salaries;
+import com.managementportal.ems.entity.EmployeeTable;
+import com.managementportal.ems.entity.SalaryTable;
 
-import com.managementportal.ems.service.EmployeeDataService;
+import com.managementportal.ems.service.SalaryService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
-public class EmployeeDataServiceImpl implements EmployeeDataService {
+public class SalaryServiceImpl implements SalaryService {
 
-    final Logger logger = LoggerFactory.getLogger(EmployeeDataServiceImpl.class);
+    final Logger logger = LoggerFactory.getLogger(SalaryServiceImpl.class);
 
     @Autowired
     SalaryDataRepo salaryDataRepo;
@@ -38,35 +34,35 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     @Override
     public SalaryDto createSalary(SalaryDto salaryDto) {
 //        List<SalaryDto> salaryDtoList=new ArrayList<>();
-        new Employee();
-        Optional<Employee> employee;
-         employee = employeeRepository.findById(salaryDto.getEmployee().getEmployeeId());
+        Optional<EmployeeTable> employee;
+        employee = employeeRepository.findById(salaryDto.getEmployeeTable().getEmployeeId());
         System.out.println(employee.get());
-        Salaries salaries = modelMapper.map(salaryDto,Salaries.class);
-        salaries.setEmployee(employee.get());
+        SalaryTable salaryTable = modelMapper.map(salaryDto, SalaryTable.class);
+        //salaryTable.setEmployeeTable(employee.get());
 
-        salaryDataRepo.save(salaries);
+        salaryDataRepo.save(salaryTable);
 
-        return modelMapper.map(salaries,SalaryDto.class);
+        return modelMapper.map(salaryTable, SalaryDto.class);
     }
 
     @Override
     public SalaryDto getSalaryById(Long employee_id) {
-        Optional<Salaries> salaryList = salaryDataRepo.findById(employee_id);
-        Salaries salary=salaryList.get();
-       // SalaryDto salaryDto=SalaryMapper.mapToSalaryDto(salary);
-        //employee.setEmployeeId(salaryDto.getEmployeeId());
+        Optional<SalaryTable> salaryList = salaryDataRepo.findById(employee_id);
+        SalaryTable salary = salaryList.get();
+        // SalaryDto salaryDto=SalaryMapper.mapToSalaryDto(salary);
+        //employee.setEmployeeTableId(salaryDto.getEmployeeTableId());
         System.out.println(salaryList);
-        return modelMapper.map(salary,SalaryDto.class);
+        return modelMapper.map(salary, SalaryDto.class);
     }
 
     @Override
     public List<SalaryDto> getAllSalary() {
-        List<Salaries> salaryList = salaryDataRepo.findAll();
+        List<SalaryTable> salaryList = salaryDataRepo.findAll();
 
         return salaryList.stream()
                 .map(salary -> modelMapper.map(salary, SalaryDto.class))
-                .collect(Collectors.toList());    }
+                .collect(Collectors.toList());
+    }
 
 
     @Override
@@ -75,5 +71,6 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
     }
 
     @Override
-    public void deleteSalary(Long id) {}
+    public void deleteSalary(Long id) {
+    }
 }

@@ -4,21 +4,17 @@ import com.managementportal.ems.Repository.AuthService;
 import com.managementportal.ems.Security.JwtTokenProvider;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
-import com.managementportal.ems.entity.Register;
+import com.managementportal.ems.entity.RegisterTable;
 import com.managementportal.ems.exception.LoginException;
 import com.managementportal.ems.exception.RegistrationException;
 import com.managementportal.ems.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean register(RegisterDto registerDto) {
 
-        Register register = new Register();
+        RegisterTable registerTable = new RegisterTable();
 
         if (Objects.equals(registerDto.getPassword(), "") ||
                 Objects.equals(registerDto.getUsername(), "") ||
@@ -64,16 +60,16 @@ public class UserServiceImpl implements UserService {
 
             logger.info("registration has started");
 
-            register.setEmail(registerDto.getEmail());
-            register.setName(registerDto.getUsername());
+            registerTable.setEmail(registerDto.getEmail());
+            registerTable.setName(registerDto.getUsername());
             if (registerDto.getPassword().length() < 7) {
                 logger.error("length is less than 7");
                 throw new RegistrationException("password length is less than 7 current length is : " + registerDto.getPassword().length());
 
             }
-            register.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-            register.setName(registerDto.getName());
-            authService.save(register);
+            registerTable.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+            registerTable.setName(registerDto.getName());
+            authService.save(registerTable);
 
             logger.info("registration has ended");
 

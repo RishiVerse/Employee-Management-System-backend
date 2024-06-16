@@ -2,9 +2,7 @@ package com.managementportal.ems.controller;
 
 
 import com.managementportal.ems.dto.SalaryDto;
-import com.managementportal.ems.entity.Salaries;
-import com.managementportal.ems.service.EmployeeDataService;
-import com.managementportal.ems.service.impl.UserServiceImpl;
+import com.managementportal.ems.service.SalaryService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,42 +17,46 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/employees/data")
-public class EmployeeData {
+public class SalaryController {
 
-    final Logger logger = LoggerFactory.getLogger(EmployeeData.class);
+    final Logger logger = LoggerFactory.getLogger(SalaryController.class);
+
 
     @Autowired
-    private EmployeeDataService employeeDataService;
+    private SalaryService salaryService;
 
     @PostMapping
     public ResponseEntity<SalaryDto> createEmployee(@RequestBody SalaryDto salaryDto) {
 
-        SalaryDto savedSalary = employeeDataService.createSalary(salaryDto);
+        SalaryDto savedSalary = salaryService.createSalary(salaryDto);
         return new ResponseEntity<>(savedSalary, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<SalaryDto> getEmployee(@PathVariable Long id) {
-        SalaryDto savedEmployee = employeeDataService.getSalaryById(id);
+        SalaryDto savedEmployee = salaryService.getSalaryById(id);
+
         return ResponseEntity.ok(savedEmployee);
     }
 
     @GetMapping
     public ResponseEntity<List<SalaryDto>> getAllSalary() {
-        List<SalaryDto> savedSalary = employeeDataService.getAllSalary();
+        List<SalaryDto> savedSalary = salaryService.getAllSalary();
         System.out.println(savedSalary);
+        //testing generated report thread
+
         return ResponseEntity.ok(savedSalary);
     }
 
     @PutMapping("{employee_id}")
     public ResponseEntity<SalaryDto> updateEmployee(@PathVariable Long employee_id, @RequestBody SalaryDto salaryDto) {
-        SalaryDto savedSalary = employeeDataService.updateSalary(employee_id, salaryDto);
+        SalaryDto savedSalary = salaryService.updateSalary(employee_id, salaryDto);
         return ResponseEntity.ok(savedSalary);
     }
 
     @DeleteMapping("{employee_id}")
     public void deleteSalary(@PathVariable Long employee_id) {
-        employeeDataService.deleteSalary(employee_id);
+        salaryService.deleteSalary(employee_id);
     }
 
 

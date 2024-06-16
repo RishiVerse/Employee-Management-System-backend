@@ -1,8 +1,7 @@
 package com.managementportal.ems.dto;
 
 
-import com.managementportal.ems.entity.Department;
-import com.managementportal.ems.entity.Employee;
+import com.managementportal.ems.entity.DepartmentTable;
 import com.managementportal.ems.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDto implements Comparable<EmployeeDto>{
+public class EmployeeDto implements Comparable<EmployeeDto> {
 
     private String emailAddress;
 
@@ -29,19 +28,18 @@ public class EmployeeDto implements Comparable<EmployeeDto>{
 
     private Long employeeId;
 
-    private List<Salaries> salary;
-    private List<Leaves> leave;
-    private List<WorkPerformance> workPerformances;
-    private List<Timesheet> timesheets;
-    private List<Department> departments;
-
+    private List<SalaryTable> salary;
+    private List<LeavesTable> leave;
+    private List<WorkPerformanceTable> workPerformanceTables;
+    private List<TimesheetTable> timesheetTables;
+    private List<DepartmentTable> departments;
 
 
     @Override
     public int compareTo(EmployeeDto o) {
 
 
-        return (int) (o.getEmployeeId()-this.employeeId);
+        return (int) (o.getEmployeeId() - this.employeeId);
 
     }
 }
