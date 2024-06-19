@@ -1,10 +1,7 @@
 package com.managementportal.ems.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +28,18 @@ public class LeavesTable {
     private String leaveReason;
     private String approvalStatus;
     private int numberOfDays;
+
+    @Override
+    public String toString() {
+        return "LeavesTable{" +
+                "leaveId=" + leaveId +
+                ", employeeTableId=" + employeeTableId +
+                ", leaveType='" + leaveType + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", leaveReason='" + leaveReason + '\'' +
+                ", approvalStatus='" + approvalStatus + '\'' +
+                ", numberOfDays=" + numberOfDays +
+                '}';
+    }
 }

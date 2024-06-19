@@ -22,8 +22,5 @@ public class RegisterTable {
     private String email;
     private String password;
 
-
-    public RegisterTable(String name, String username, String email, String password) {
-    }
 }
 

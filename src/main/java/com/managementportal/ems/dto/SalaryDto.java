@@ -18,12 +18,6 @@ public class SalaryDto {
     private Long bonus;
     private Long deduction;
     private Long total_salary;
-    private EmployeeTable employeeTable;
+    //private EmployeeTable employeeTable;
 
-//    @Override
-//    public String toString() {
-//        return "SalaryDto{" +
-//                "employeeId=" + employeeId +
-//                '}';
-//    }
 }

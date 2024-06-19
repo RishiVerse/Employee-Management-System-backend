@@ -63,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean createEmployee(EmployeeDto empdto) {
+    public EmployeeDto createEmployee(EmployeeDto empdto) {
         EmployeeTable employeeTable = modelMapper.map(empdto, EmployeeTable.class);
         String email = empdto.getEmailAddress();
         boolean flag = false;
@@ -80,8 +80,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             // Save the new employeeTable
             EmployeeTable savedEmployeeTable = employeeRepository.save(employeeTable);
             logger.info("EmployeeTable created successfully with email: {}", email);
-            flag = true;
-            return flag;
+            // flag = true;
+            // return modelMapper.map(employeeTable, EmployeeDto.class);
+            return empdto;
         } catch (DataIntegrityViolationException e) {
             logger.error("Data integrity violation while saving employeeTable with email: {}. Error: {}", email, e.getMessage());
             throw new RuntimeException("Data integrity violation: " + e.getMessage(), e);
@@ -121,6 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             logger.info("trying to access all employee list");
             emp = employeeRepository.findAll();
+            //System.out.println(emp.get(0));
             if (emp.isEmpty()) {
                 logger.warn("employee list is empty");
                 return null;

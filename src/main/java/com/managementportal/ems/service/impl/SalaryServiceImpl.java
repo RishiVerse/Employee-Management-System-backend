@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,8 +37,8 @@ public class SalaryServiceImpl implements SalaryService {
     public SalaryDto createSalary(SalaryDto salaryDto) {
 //        List<SalaryDto> salaryDtoList=new ArrayList<>();
         Optional<EmployeeTable> employee;
-        employee = employeeRepository.findById(salaryDto.getEmployeeTable().getEmployeeId());
-        System.out.println(employee.get());
+        //  employee = employeeRepository.findById(salaryDto.getEmployeeTable().getEmployeeId());
+        //System.out.println(employee.get());
         SalaryTable salaryTable = modelMapper.map(salaryDto, SalaryTable.class);
         //salaryTable.setEmployeeTable(employee.get());
 
@@ -56,12 +58,12 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public List<SalaryDto> getAllSalary() {
+    public SalaryDto getAllSalary() {
         List<SalaryTable> salaryList = salaryDataRepo.findAll();
+        System.out.println(salaryList.get(0).getEmployeeTable());
+        System.out.println(salaryList.isEmpty());
 
-        return salaryList.stream()
-                .map(salary -> modelMapper.map(salary, SalaryDto.class))
-                .collect(Collectors.toList());
+        return modelMapper.map(salaryList.get(0), SalaryDto.class);
     }
 
 

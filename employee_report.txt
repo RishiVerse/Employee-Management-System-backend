@@ -1,3 +1,6 @@
-com.managementportal.ems.dto.EmployeeDto@137d8997
-com.managementportal.ems.dto.EmployeeDto@63cbfed5
-com.managementportal.ems.dto.EmployeeDto@c04f348
+EmployeeDto{emailAddress='null', firstname='John',
+ lastname='Doe', address='123 Main St',
+  mobileNumber='123-456-7890', employeeId=1,
+   salary=[], leave=[], workPerformanceTables=[],
+    timesheetTables=[], departments=[]}
+com.managementportal.ems.dto.EmployeeDto@4ac9a6a6

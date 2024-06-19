@@ -10,7 +10,7 @@ public interface SalaryService {
 
     SalaryDto getSalaryById(Long id);
 
-    List<SalaryDto> getAllSalary();
+    SalaryDto getAllSalary();
 
     SalaryDto updateSalary(Long id, SalaryDto salaryDto);
 

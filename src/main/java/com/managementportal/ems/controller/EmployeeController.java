@@ -1,10 +1,9 @@
 package com.managementportal.ems.controller;
 
 
-import com.managementportal.ems.Threads.GenerateReport;
+import com.managementportal.ems.Utility.GenerateReport;
 import com.managementportal.ems.dto.EmployeeDto;
 import com.managementportal.ems.service.EmployeeService;
-import com.managementportal.ems.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,27 +28,27 @@ public class EmployeeController {
 
     // For creating an employee
     @PostMapping
-    public ResponseEntity<Boolean> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        boolean saveFlag = false;
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        EmployeeDto createdEmployee = null;
         try {
 
-            saveFlag = employeeService.createEmployee(employeeDto);
+            createdEmployee = employeeService.createEmployee(employeeDto);
 
             logger.error("employee is created ");
 
         } catch (Exception e) {
             logger.error("creation of employee failed {} ", e.getMessage());
-            return new ResponseEntity<>(saveFlag, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(createdEmployee, HttpStatus.NO_CONTENT);
 
         }
 
-        return new ResponseEntity<>(saveFlag, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
 
     // For adding bulk users
 
-    @PostMapping("bulk")
+    @PostMapping("/bulk")
     public ResponseEntity<List<EmployeeDto>> createBulkEmployee(@RequestBody List<EmployeeDto> employeeDto) {
         List<EmployeeDto> savedEmployee = employeeService.createBulkEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
@@ -59,9 +58,10 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable Long id) {
         EmployeeDto byIdFlag = null;
         try {
+            logger.info("now in finding by id stage");
             byIdFlag = employeeService.getEmployeeById(id);
-//            Thread thread = new Thread(new GenerateReport(employeeService.getEmployeeById(id)));
-//            thread.start();
+            Thread thread = new Thread(new GenerateReport(employeeService.getEmployeeById(id)));
+            thread.start();
             if (byIdFlag == null) {
                 logger.error("no employee available with  , id {}", id);
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -80,7 +80,6 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
         List<EmployeeDto> savedEmployee = employeeService.getAllEmployee();
         System.out.println(savedEmployee);
-
         return ResponseEntity.ok(savedEmployee);
     }
 

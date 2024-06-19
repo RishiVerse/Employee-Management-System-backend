@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/employees/data")
+@RequestMapping("/api/employees/salary")
 public class SalaryController {
 
     final Logger logger = LoggerFactory.getLogger(SalaryController.class);
@@ -26,30 +26,39 @@ public class SalaryController {
     private SalaryService salaryService;
 
     @PostMapping
-    public ResponseEntity<SalaryDto> createEmployee(@RequestBody SalaryDto salaryDto) {
+    public ResponseEntity<SalaryDto> createSalary(@RequestBody SalaryDto salaryDto) {
 
         SalaryDto savedSalary = salaryService.createSalary(salaryDto);
         return new ResponseEntity<>(savedSalary, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<SalaryDto> getEmployee(@PathVariable Long id) {
+    public ResponseEntity<SalaryDto> getSalaryById(@PathVariable Long id) {
         SalaryDto savedEmployee = salaryService.getSalaryById(id);
 
         return ResponseEntity.ok(savedEmployee);
     }
 
     @GetMapping
-    public ResponseEntity<List<SalaryDto>> getAllSalary() {
-        List<SalaryDto> savedSalary = salaryService.getAllSalary();
-        System.out.println(savedSalary);
-        //testing generated report thread
+    public ResponseEntity<SalaryDto> getAllSalary() {
+        SalaryDto savedSalary = null;
+        try {
+            logger.info("inside try block to find salary in controller method");
+            savedSalary = salaryService.getAllSalary();
+
+        } catch (Exception e) {
+            logger.error("something went wrong in controller method");
+            return ResponseEntity.ok(savedSalary);
+
+        }
+        // System.out.println(savedSalary);
+
 
         return ResponseEntity.ok(savedSalary);
     }
 
     @PutMapping("{employee_id}")
-    public ResponseEntity<SalaryDto> updateEmployee(@PathVariable Long employee_id, @RequestBody SalaryDto salaryDto) {
+    public ResponseEntity<SalaryDto> updateSalary(@PathVariable Long employee_id, @RequestBody SalaryDto salaryDto) {
         SalaryDto savedSalary = salaryService.updateSalary(employee_id, salaryDto);
         return ResponseEntity.ok(savedSalary);
     }

@@ -17,6 +17,7 @@ import lombok.Setter;
 public class SalaryTable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long salaryId;
     private Long basic_salary;
     private Long bonus;
@@ -24,6 +25,16 @@ public class SalaryTable {
     private Long total_salary;
     @ManyToOne
     private EmployeeTable employeeTable;
-
-
+//
+//    @Override
+//    public String toString() {
+//        return "SalaryTable{" +
+//                "salaryId=" + salaryId +
+//                ", basic_salary=" + basic_salary +
+//                ", bonus=" + bonus +
+//                ", deduction=" + deduction +
+//                ", total_salary=" + total_salary +
+//                ", employeeTable=" + employeeTable +
+//                '}';
+//    }
 }

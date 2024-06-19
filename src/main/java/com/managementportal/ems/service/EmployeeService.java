@@ -6,7 +6,7 @@ import com.managementportal.ems.dto.RegisterDto;
 import java.util.List;
 
 public interface EmployeeService {
-    boolean createEmployee(EmployeeDto empdto);
+    EmployeeDto createEmployee(EmployeeDto empdto);
 
     EmployeeDto getEmployeeById(Long id);
 

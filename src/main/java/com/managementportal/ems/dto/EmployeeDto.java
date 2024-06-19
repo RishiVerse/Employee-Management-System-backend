@@ -14,7 +14,25 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDto implements Comparable<EmployeeDto> {
+public class EmployeeDto {
+//    @Override
+//    public String toString() {
+//        return "EmployeeDto{" +
+//                "emailAddress='" + emailAddress + '\'' +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", address='" + address + '\'' +
+//                ", mobileNumber='" + mobileNumber + '\'' +
+//                ", employeeId=" + employeeId +
+//                ", salary=" + salary +
+//                ", leave=" + leave +
+//                ", workPerformanceTables=" + workPerformanceTables +
+//                ", timesheetTables=" + timesheetTables +
+//                ", departments=" + departments +
+//                '}';
+//    implements Comparable<EmployeeDto> }
+
+    private Long employeeId;
 
     private String emailAddress;
 
@@ -26,20 +44,18 @@ public class EmployeeDto implements Comparable<EmployeeDto> {
 
     private String mobileNumber;
 
-    private Long employeeId;
 
-    private List<SalaryTable> salary;
-    private List<LeavesTable> leave;
-    private List<WorkPerformanceTable> workPerformanceTables;
-    private List<TimesheetTable> timesheetTables;
-    private List<DepartmentTable> departments;
-
-
-    @Override
-    public int compareTo(EmployeeDto o) {
+//    private List<SalaryTable> salary;
+//    private List<LeavesTable> leave;
+//    private List<WorkPerformanceTable> workPerformanceTables;
+//    private List<TimesheetTable> timesheetTables;
+//    private List<DepartmentTable> departments;
 
 
-        return (int) (o.getEmployeeId() - this.employeeId);
-
-    }
+//    @Override
+//    public int compareTo(EmployeeDto o) {
+//
+//        return (int) (o.getEmployeeId() - this.employeeId);
+//
+//    }
 }

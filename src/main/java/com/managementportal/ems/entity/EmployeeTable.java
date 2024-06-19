@@ -16,6 +16,10 @@ import java.util.List;
 @Entity
 @Table(name = "employees")
 public class EmployeeTable {
+
+    @Id
+    private Long employeeId;
+
     private String email;
 
     private String firstname;
@@ -25,9 +29,6 @@ public class EmployeeTable {
     private String address;
 
     private String mobileNumber;
-
-    @Id
-    private Long employeeId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeTable")
     private List<SalaryTable> salary;
@@ -44,7 +45,22 @@ public class EmployeeTable {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "employeeTable")
     private List<DepartmentTable> departments;
 
-
+//    @Override
+//    public String toString() {
+//        return "EmployeeTable{" +
+//                "employeeId=" + employeeId +
+//                ", email='" + email + '\'' +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", address='" + address + '\'' +
+//                ", mobileNumber='" + mobileNumber + '\'' +
+//                ", salary=" + salary +
+//                ", leave=" + leave +
+//                ", workPerformanceTables=" + workPerformanceTables +
+//                ", timesheetTables=" + timesheetTables +
+//                ", departments=" + departments +
+//                '}';
+//    }
 }
 
 
