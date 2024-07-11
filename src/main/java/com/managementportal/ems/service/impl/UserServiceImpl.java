@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
             logger.info("registration has started");
 
             registerTable.setEmail(registerDto.getEmail());
-            registerTable.setName(registerDto.getUsername());
+            registerTable.setUsername(registerDto.getUsername());
+
             if (registerDto.getPassword().length() < 7) {
                 logger.error("length is less than 7");
                 throw new RegistrationException("password length is less than 7 current length is : " + registerDto.getPassword().length());

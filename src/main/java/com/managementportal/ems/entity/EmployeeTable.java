@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,6 +45,9 @@ public class EmployeeTable {
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "employeeTable")
     private List<DepartmentTable> departments;
+
+    public <E> EmployeeTable(String emailAddress, String firstname, String lastname, String address, String mobileNumber, ArrayList<E> es, ArrayList<E> es1, ArrayList<E> es2, ArrayList<E> es3, ArrayList<E> es4) {
+    }
 
 //    @Override
 //    public String toString() {

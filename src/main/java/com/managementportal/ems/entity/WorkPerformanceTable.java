@@ -29,7 +29,6 @@ public class WorkPerformanceTable {
     private String jobTitle;
     private LocalDate dateOfJoining;
     private String managerName;
-
     // Performance-related attributes
     private double performanceRating;
     private int projectsCompleted;

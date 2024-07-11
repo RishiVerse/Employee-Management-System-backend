@@ -18,6 +18,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+import redis.clients.jedis.UnifiedJedis;
+import redis.clients.jedis.params.SetParams;
+
 @Component
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -41,11 +44,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             EmployeeTable emp = new EmployeeTable();
 
             // Check if employee with the same email already exists
-            if (employeeRepository.findByEmail(employeeEach.getEmailAddress()).isPresent() ||
+            if (employeeRepository.findByEmail(employeeEach.getEmail()).isPresent() ||
                     employeeRepository.findByEmployeeId(employeeEach.getEmployeeId()).isPresent()) {
                 empDuplicateSet.add(employeeEach);
             } else {
-                emp.setEmail(employeeEach.getEmailAddress());
+                emp.setEmail(employeeEach.getEmail());
                 emp.setEmployeeId(employeeEach.getEmployeeId());
                 emp.setFirstname(employeeEach.getFirstname());
                 emp.setLastname(employeeEach.getLastname());
@@ -64,8 +67,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto empdto) {
-        EmployeeTable employeeTable = modelMapper.map(empdto, EmployeeTable.class);
-        String email = empdto.getEmailAddress();
+
+
+        EmployeeTable employeeTable = modelMapper.map(new EmployeeDto.EmployeeDtoBuilder()
+                .setEmployeeId(empdto.getEmployeeId())
+                .setAddress(empdto.getAddress())
+                .setEmail(empdto.getEmail())
+                .setFirstname(empdto.getMobileNumber())
+                .setLastname(empdto.getLastname())
+                .setMobileNumber(empdto.getMobileNumber())
+                .build(), EmployeeTable.class);
+
+
+        String email = empdto.getEmail();
         boolean flag = false;
 
         logger.info("Search for duplicate employeeTable started");
@@ -153,7 +167,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Optional<EmployeeTable> optionalEmp = employeeRepository.findById(id);
             if (optionalEmp.isPresent()) {
                 emp = optionalEmp.get();
-                emp.setEmail(empdto.getEmailAddress());
+                emp.setEmail(empdto.getEmail());
                 emp.setFirstname(empdto.getFirstname());
                 emp.setLastname(empdto.getLastname());
                 employeeRepository.save(emp);

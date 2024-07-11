@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface WorkPerformance {
 
-    boolean createWorkPerformance(PerformanceDto performanceDto);
+    PerformanceDto createWorkPerformance(PerformanceDto performanceDto);
 
-    EmployeeDto getWorkPerformanceById(Long id);
+    PerformanceDto getWorkPerformanceById(Long id);
 
-    List<EmployeeDto> getAllWorkPerformance();
+    List<PerformanceDto> getAllWorkPerformance();
 
     Boolean updateWorkPerformance(Long id, PerformanceDto performanceDto);
 

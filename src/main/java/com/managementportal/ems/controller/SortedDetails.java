@@ -33,7 +33,7 @@ public class SortedDetails {
             case "email": {
                 try {
                     logger.info("\n****** email sorting *******\n");
-                    savedEmployee.sort(Comparator.comparing(EmployeeDto::getEmailAddress));
+                    savedEmployee.sort(Comparator.comparing(EmployeeDto::getEmail));
                     break;
                 } catch (Exception e) {
                     logger.error("\nError sorting employees by {}: {}", sortedBy, e.getMessage(), e);

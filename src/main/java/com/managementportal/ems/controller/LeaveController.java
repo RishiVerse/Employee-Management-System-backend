@@ -1,6 +1,7 @@
 package com.managementportal.ems.controller;
 
 
+import com.managementportal.ems.Utility.GenerateReport;
 import com.managementportal.ems.dto.LeaveDto;
 import com.managementportal.ems.dto.TestLeaves;
 import com.managementportal.ems.service.LeaveService;
@@ -47,35 +48,27 @@ public class LeaveController {
     }
 
 
-    // For adding bulk users
-
-//    @PostMapping("/bulk")
-//    public ResponseEntity<List<EmployeeDto>> createBulkEmployee(@RequestBody List<EmployeeDto> employeeDto) {
-//        List<EmployeeDto> savedEmployee = employeeService.createBulkEmployee(employeeDto);
-//        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping("{id}")
-//    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable Long id) {
-//        EmployeeDto byIdFlag = null;
-//        try {
-//            logger.info("now in finding by id stage");
-//            byIdFlag = employeeService.getEmployeeById(id);
-//            Thread thread = new Thread(new GenerateReport(employeeService.getEmployeeById(id)));
+    @GetMapping("{id}")
+    public ResponseEntity<LeaveDto> getEmployee(@PathVariable Long id) {
+        LeaveDto leaveDto = null;
+        try {
+            logger.info("now in finding by id stage");
+            leaveDto = leaveService.getLeaveById(id);
+//            Thread thread = new Thread(new GenerateReport(leaveService.getLeaveById(id)));
 //            thread.start();
-//            if (byIdFlag == null) {
-//                logger.error("no employee available with  , id {}", id);
-//                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-//
-//            }
-//            return new ResponseEntity<>(null, HttpStatus.CREATED);
-//
-//
-//        } catch (Exception e) {
-//            logger.error("error in finding employee in controller class , id {}", id);
-//            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-//        }
-//    }
+            if (leaveDto == null) {
+                logger.error("no employee available with  , id {}", id);
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+
+            }
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
+
+
+        } catch (Exception e) {
+            logger.error("error in finding employee in controller class , id {}", id);
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<TestLeaves>> getAllEmployee() {
@@ -84,31 +77,31 @@ public class LeaveController {
         return ResponseEntity.ok(savedEmployee);
     }
 
-//    @PutMapping("{id}")
-//    public ResponseEntity<Boolean> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
-//        boolean savedEmployeeFlag = false;
-//        try {
-//            logger.info("trying to update , in controller method with id {}", id);
-//
-//            savedEmployeeFlag = employeeService.updateEmployee(id, employeeDto);
-//
-//            if (savedEmployeeFlag)
-//                return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.CREATED);
-//            else
-//                return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//
-//            logger.error("updating failed, in controller method with id {}{}", id, e.getMessage());
-//            return new ResponseEntity<>(savedEmployeeFlag, HttpStatus.BAD_REQUEST);
-//        }
-//
-//
-//    }
-//
-//    @DeleteMapping("{id}")
-//    public void updateEmployee(@PathVariable Long id) {
-//        employeeService.deleteEmployee(id);
-//
-//    }
+    @PutMapping("{id}")
+    public ResponseEntity<Boolean> updateEmployee(@PathVariable Long id, @RequestBody LeaveDto leaveDto) {
+        boolean savedLeaveFlag = false;
+        try {
+            logger.info("trying to update , in controller method with id {}", id);
+
+            savedLeaveFlag = leaveService.updateLeave(id, leaveDto);
+
+            if (savedLeaveFlag)
+                return new ResponseEntity<>(savedLeaveFlag, HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(savedLeaveFlag, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+
+            logger.error("updating failed, in controller method with id {}{}", id, e.getMessage());
+            return new ResponseEntity<>(savedLeaveFlag, HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+    @DeleteMapping("{id}")
+    public void updateEmployee(@PathVariable Long id) {
+        leaveService.deleteLeave(id);
+
+    }
 
 }
