@@ -69,4 +69,10 @@ public class SalaryController {
     }
 
 
+    @GetMapping("/query/{employee_id}")
+    public ResponseEntity<String> employeeWithSalary(@PathVariable int employee_id) {
+        String lst = salaryService.employeeSalary(employee_id);
+        return ResponseEntity.ok(lst);
+    }
+
 }

@@ -7,20 +7,19 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Collection;
 
+
 @SpringBootApplication
 public class EmsBackendApplication {
 
-	@Bean
-	public ModelMapper modelMapper()
-	{
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(EmsBackendApplication.class, args);
-
+    public static void main(String[] args) {
+        SpringApplication.run(EmsBackendApplication.class, args);
 
 
-	}
+    }
 
 }

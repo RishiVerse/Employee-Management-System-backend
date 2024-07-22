@@ -23,7 +23,9 @@ public class SalaryTable {
     private Long bonus;
     private Long deduction;
     private Long total_salary;
+
     @ManyToOne
+    @JoinColumn(name = "employee_table_employee_id")
     private EmployeeTable employeeTable;
 //
 //    @Override

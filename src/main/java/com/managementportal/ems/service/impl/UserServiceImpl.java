@@ -5,7 +5,7 @@ import com.managementportal.ems.Security.JwtTokenProvider;
 import com.managementportal.ems.dto.LoginDto;
 import com.managementportal.ems.dto.RegisterDto;
 import com.managementportal.ems.entity.RegisterTable;
-import com.managementportal.ems.exception.LoginException;
+import com.managementportal.ems.exception.AuthException;
 import com.managementportal.ems.exception.RegistrationException;
 import com.managementportal.ems.service.UserService;
 import lombok.AllArgsConstructor;
@@ -84,6 +84,8 @@ public class UserServiceImpl implements UserService {
     public String login(LoginDto loginDto) {
         try {
             logger.info("login in process started");
+//            AuthException authException = new AuthException("testing");
+//            authException.getErrorCode();
 
             Authentication response = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
@@ -94,10 +96,10 @@ public class UserServiceImpl implements UserService {
             return jwtTokenProvider.generate(response);
         } catch (BadCredentialsException e) {
             logger.error("Invalid login credentials: {}", e.getMessage());
-            throw new LoginException("password length is less than 7 current length is : ");
+            throw new AuthException("password length is less than 7 current length is : ");
         } catch (Exception e) {
             logger.error("exception other than bad login credentials: {}", e.getMessage());
-            throw new LoginException("Enter correct details");
+            throw new AuthException("Enter correct details");
         }
 
     }

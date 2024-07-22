@@ -32,7 +32,7 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager manager;
 
-
+   
     @PostMapping("/register")
     public ResponseEntity<Boolean> register(@RequestBody RegisterDto registerDto) {
         boolean response = false;
