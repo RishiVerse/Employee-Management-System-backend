@@ -2,6 +2,7 @@ package com.managementportal.ems.service.impl;
 
 import com.managementportal.ems.Repository.EmployeeRepository;
 import com.managementportal.ems.Repository.SalaryDataRepo;
+import com.managementportal.ems.dto.EmployeeWithSalary;
 import com.managementportal.ems.dto.SalaryDto;
 import com.managementportal.ems.entity.EmployeeTable;
 import com.managementportal.ems.entity.SalaryTable;
@@ -74,8 +75,9 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public String employeeSalary(int employeeId) {
-        String employeeWithSalaries = salaryDataRepo.findEmployeeSalaries(employeeId);
+    public List<EmployeeWithSalary> employeeSalary(int employeeId) {
+        EmployeeWithSalary employeeWithSalary = new EmployeeWithSalary(salaryDataRepo.findEmployeeSalaries(employeeId));
+        List<EmployeeWithSalary> employeeWithSalaries = salaryDataRepo.findEmployeeSalaries(employeeId);
 
         return employeeWithSalaries;
     }

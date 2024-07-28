@@ -1,6 +1,7 @@
 package com.managementportal.ems.controller;
 
 
+import com.managementportal.ems.dto.EmployeeWithSalary;
 import com.managementportal.ems.dto.SalaryDto;
 import com.managementportal.ems.service.SalaryService;
 import lombok.AllArgsConstructor;
@@ -70,8 +71,8 @@ public class SalaryController {
 
 
     @GetMapping("/query/{employee_id}")
-    public ResponseEntity<String> employeeWithSalary(@PathVariable int employee_id) {
-        String lst = salaryService.employeeSalary(employee_id);
+    public ResponseEntity<List<EmployeeWithSalary>> employeeWithSalary(@PathVariable int employee_id) {
+        List<EmployeeWithSalary> lst = salaryService.employeeSalary(employee_id);
         return ResponseEntity.ok(lst);
     }
 
